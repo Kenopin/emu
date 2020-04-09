@@ -79,7 +79,7 @@ public class PlayerData extends AbstractDAO<Player> {
 							RS.getInt("honor"), RS.getInt("deshonor"), RS.getInt("alvl"), RS.getString("zaaps"),
 							RS.getByte("title"), RS.getInt("wife"), RS.getString("morphMode"), RS.getString("allTitle"),
 							RS.getString("emotes"), RS.getLong("prison"), false, RS.getString("parcho"),
-							RS.getLong("timeDeblo"), RS.getBoolean("noall"), RS.getString("parcho"));
+							RS.getLong("timeDeblo"), RS.getBoolean("noall"), RS.getString("succes"));
 					perso.VerifAndChangeItemPlace();
 					World.addPersonnage(perso);
 					if (!perso.isShowSeller())
@@ -124,7 +124,7 @@ public class PlayerData extends AbstractDAO<Player> {
 							RS.getInt("honor"), RS.getInt("deshonor"), RS.getInt("alvl"), RS.getString("zaaps"),
 							RS.getByte("title"), RS.getInt("wife"), RS.getString("morphMode"), RS.getString("allTitle"),
 							RS.getString("emotes"), RS.getLong("prison"), false, RS.getString("parcho"),
-							RS.getLong("timeDeblo"), RS.getBoolean("noall"), RS.getString("parcho"));
+							RS.getLong("timeDeblo"), RS.getBoolean("noall"), RS.getString("succes"));
 					perso.VerifAndChangeItemPlace();
 					World.addPersonnage(perso);
 					int guild = Database.getGame().getGuild_memberData().isPersoInGuild(RS.getInt("id"));
@@ -183,7 +183,7 @@ public class PlayerData extends AbstractDAO<Player> {
 							RS.getInt("honor"), RS.getInt("deshonor"), RS.getInt("alvl"), RS.getString("zaaps"),
 							RS.getByte("title"), RS.getInt("wife"), RS.getString("morphMode"), RS.getString("allTitle"),
 							RS.getString("emotes"), RS.getLong("prison"), false, RS.getString("parcho"),
-							RS.getLong("timeDeblo"), RS.getBoolean("noall"),RS.getString("parcho"));
+							RS.getLong("timeDeblo"), RS.getBoolean("noall"), RS.getString("succes"));
 					perso.VerifAndChangeItemPlace();
 					World.addPersonnage(perso);
 					int guild = Database.getGame().getGuild_memberData().isPersoInGuild(RS.getInt("id"));
@@ -306,7 +306,7 @@ public class PlayerData extends AbstractDAO<Player> {
 
 		try {
 			p = this.getPreparedStatement(
-					"UPDATE `players` SET `kamas`= ?, `spellboost`= ?, `capital`= ?, `energy`= ?, `level`= ?, `xp`= ?, `size` = ?, `gfx`= ?, `alignement`= ?, `honor`= ?, `deshonor`= ?, `alvl`= ?, `vitalite`= ?, `force`= ?, `sagesse`= ?, `intelligence`= ?, `chance`= ?, `agilite`= ?, `seeFriend`= ?, `seeAlign`= ?, `seeSeller`= ?, `canaux`= ?, `map`= ?, `cell`= ?, `pdvper`= ?, `spells`= ?, `objets`= ?, `storeObjets`= ?, `savepos`= ?, `zaaps`= ?, `jobs`= ?, `mountxpgive`= ?, `mount`= ?, `title`= ?, `wife`= ?, `morphMode`= ?, `allTitle` = ?, `emotes` = ?, `prison` = ?, `parcho` = ?, `timeDeblo` = ?, `noall` = ? WHERE `players`.`id` = ? LIMIT 1");
+					"UPDATE `players` SET `kamas`= ?, `spellboost`= ?, `capital`= ?, `energy`= ?, `level`= ?, `xp`= ?, `size` = ?, `gfx`= ?, `alignement`= ?, `honor`= ?, `deshonor`= ?, `alvl`= ?, `vitalite`= ?, `force`= ?, `sagesse`= ?, `intelligence`= ?, `chance`= ?, `agilite`= ?, `seeFriend`= ?, `seeAlign`= ?, `seeSeller`= ?, `canaux`= ?, `map`= ?, `cell`= ?, `pdvper`= ?, `spells`= ?, `objets`= ?, `storeObjets`= ?, `savepos`= ?, `zaaps`= ?, `jobs`= ?, `mountxpgive`= ?, `mount`= ?, `title`= ?, `wife`= ?, `morphMode`= ?, `allTitle` = ?, `emotes` = ?, `prison` = ?, `parcho` = ?, `timeDeblo` = ?, `noall` = ?, `succes`= ? WHERE `players`.`id` = ? LIMIT 1");
 			p.setLong(1, perso.get_kamas());
 			p.setInt(2, perso.get_spellPts());
 			p.setInt(3, perso.get_capital());
@@ -357,7 +357,8 @@ public class PlayerData extends AbstractDAO<Player> {
 			p.setString(40, perso.parseStatsParcho());
 			p.setLong(41, perso.restriction.timeDeblo);
 			p.setBoolean(42, perso.noall);
-			p.setInt(43, perso.getId());
+			p.setString(43, perso.parseSucces());
+			p.setInt(44, perso.getId());
 			this.execute(p);
 			if (perso.getGuildMember() != null) {
 				Database.getGame().getGuild_memberData().update(perso);
