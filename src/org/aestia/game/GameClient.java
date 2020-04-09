@@ -64,7 +64,6 @@ import org.aestia.other.Tutorial;
 import org.aestia.quest.Quest;
 import org.aestia.quest.Quest_Etape;
 import org.apache.mina.core.session.IoSession;
-import org.aestia.succes.Decouverte;
 
 public class GameClient {
 	private IoSession session;
@@ -4526,7 +4525,7 @@ public class GameClient {
 			GA.args = path;
 			this.perso.get_fight().onFighterDeplace(F, GA);
 		}
-		org.aestia.succes.decouverte.succesDecouverte(perso);				
+						
 	}
 
 	private void gameCheckSign(final String packet) {

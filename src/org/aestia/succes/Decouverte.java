@@ -12,7 +12,10 @@ public class Decouverte {
     		short Mapid = perso.getCurMap().getId();
     		switch (Mapid){
     		case 10295:
-    			perso.verifAndAddSucces(Mapid, 1000, 1000);
+    			perso.verifAndAddSucces(Mapid, 1000, 1000, "trop smart");
+    			break;
+    		case 10297:
+    			perso.verifAndAddSucces(Mapid, 1000, 1000, "trop smart");
     			break;
     		}		
     	}		

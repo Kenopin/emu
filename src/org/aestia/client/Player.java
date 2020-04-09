@@ -3565,6 +3565,7 @@ public class Player {
 				}, 1000L);
 			}
 		}
+		org.aestia.succes.Decouverte.succesDecouverte(this);
 	}
 
 	public void teleport(final org.aestia.map.Map map, final int cell) {
@@ -6383,13 +6384,13 @@ public class Player {
 		return this.getGameClient().getWaiter();
 	}
 	
-	public void verifAndAddSucces(final short mapId, long kamas, long exp) {
+	public void verifAndAddSucces(final short mapId, long kamas, long exp, String message) {
 		
 		if (!this._succes.contains(mapId)) {
 			this.set_kamas(this.get_kamas()+kamas);
 			this.setExp(this.getExp()+exp);
 			this._succes.add(mapId);
-			//this.sendMessage("Bien sur que je suis le boss. x)");
+			this.sendMessage(message);
 			Database.getStatique().getPlayerData().update(this, false);
 		}
 	}
