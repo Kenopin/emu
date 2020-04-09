@@ -65,7 +65,7 @@ import org.aestia.other.Trunk;
 import org.aestia.other.Tutorial;
 import org.aestia.quest.Quest;
 import org.aestia.quest.Quest_Etape;
-import org.aestia.succes.decouverte;
+import org.aestia.succes.Decouverte;
 import org.aestia.command.VipMaitre;
 
 
