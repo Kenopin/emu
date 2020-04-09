@@ -19,10 +19,8 @@ import org.aestia.exchange.ExchangeClient;
 import org.aestia.game.GameServer;
 import org.aestia.game.scheduler.WorldSave;
 import org.aestia.game.world.World;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 public class Main {
 	public static boolean isRunning = false;
@@ -88,7 +86,6 @@ public class Main {
 		Console.begin();
 		if (!modDebug) {
 			Logger root = (Logger) LoggerFactory.getLogger("ROOT");
-			root.setLevel(Level.OFF);
 		}
 	}
 
