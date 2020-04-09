@@ -64,6 +64,7 @@ import org.aestia.other.Tutorial;
 import org.aestia.quest.Quest;
 import org.aestia.quest.Quest_Etape;
 import org.apache.mina.core.session.IoSession;
+import org.aestia.succes.decouverte;
 
 public class GameClient {
 	private IoSession session;
@@ -77,7 +78,7 @@ public class GameClient {
 	private long timeLastIncarnamMsg;
 	private boolean walk;
 	private Command command;
-	private TimerWaiter waiter;
+	private TimerWaiter waiter;	
 
 	public GameClient(final IoSession session) {
 		this.actions = new TreeMap<Integer, GameAction>();
@@ -4400,6 +4401,7 @@ public class GameClient {
 	}
 
 	private void gameParseDeplacementPacket(final GameAction GA) {
+		
 		String path = GA.packet.substring(5);
 		if (this.perso.get_fight() == null) {
 			if (this.perso.getBlockMovement()) {
@@ -4524,9 +4526,7 @@ public class GameClient {
 			GA.args = path;
 			this.perso.get_fight().onFighterDeplace(F, GA);
 		}
-		if (perso.getCurMap().getId()==10297) {
-			perso.sendMessage("Ca fonctionne");
-		}
+		org.aestia.succes.decouverte.SuccesDecouverte(perso);				
 	}
 
 	private void gameCheckSign(final String packet) {

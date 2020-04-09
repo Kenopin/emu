@@ -55,6 +55,7 @@ import org.aestia.map.InteractiveObject;
 import org.aestia.map.MountPark;
 import org.aestia.map.laby.Dc;
 import org.aestia.map.laby.Toror;
+import org.aestia.object.Object;
 import org.aestia.object.ObjectSet;
 import org.aestia.object.ObjectTemplate;
 import org.aestia.other.Dopeul;
@@ -64,10 +65,14 @@ import org.aestia.other.Trunk;
 import org.aestia.other.Tutorial;
 import org.aestia.quest.Quest;
 import org.aestia.quest.Quest_Etape;
+import org.aestia.succes.decouverte;
 import org.aestia.command.VipMaitre;
 
 
 public class Player {
+	
+	private ArrayList<Short> _succes;
+	
 	public boolean boutique = false;
 	public int lastVita;
 	private VipMaitre _maitre = null;
@@ -97,7 +102,6 @@ public class Player {
 	public boolean isNew;
 	private Map<Integer, Integer> staticEmote;
 	private Map<Integer, Integer> dynamicEmote;
-	private Map<Integer, Integer> succes;
 	private byte _align;
 	private int _deshonor;
 	private int _honor;
@@ -235,8 +239,7 @@ public class Player {
 		this._orientation = 1;
 		this.canAggro = true;
 		this.isNew = false;
-		this.staticEmote = new HashMap<Integer, Integer>();
-		this.succes = new HashMap<Integer, Integer>();
+		this.staticEmote = new HashMap<Integer, Integer>();		
 		this.dynamicEmote = new HashMap<Integer, Integer>();
 		this._align = 0;
 		this._deshonor = 0;
@@ -259,6 +262,9 @@ public class Player {
 		this._inDD = false;
 		this._isZaaping = false;
 		this._zaaps = new ArrayList<Short>();
+		
+		this._succes = new ArrayList<Short>();
+		
 		this._isAbsent = false;
 		this._isInvisible = false;
 		this._isForgetingSpell = false;
@@ -381,14 +387,7 @@ public class Player {
 					final String i = split[k];
 					this.addStaticEmote(Integer.parseInt(i));
 				}
-			}
-			if (!succes.isEmpty()) {//test
-				String[] split;
-				for (int length = (split = succes.split(";")).length, k = 0; k < length; ++k) {
-					final String i = split[k];
-					this.addStaticEmote(Integer.parseInt(i));
-				}
-			}
+			}						
 			if (!morphMode.equals("")) {
 				if (morphMode.equals("0")) {
 					morphMode = "0;0";
@@ -593,6 +592,9 @@ public class Player {
 		this._inDD = false;
 		this._isZaaping = false;
 		this._zaaps = new ArrayList<Short>();
+		
+		this._succes = new ArrayList<Short>();
+		
 		this._isAbsent = false;
 		this._isInvisible = false;
 		this._isForgetingSpell = false;
@@ -1161,7 +1163,7 @@ public class Player {
 								: Constant.getStartCell(classe)),
 				"", 0, -1, 0, 0, 0, z, (byte) 0, 0, "0;0", "",
 				Config.getInstance().allEmote ? "0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21" : "0", 0L,
-				true, "118,0;119,0;123,0;124,0;125,0;126,0", 0L, false,"");
+				true, "118,0;119,0;123,0;124,0;125,0;126,0", 0L, false, "");
 		perso.staticEmote.put(1, 1);
 		perso._sorts = Constant.getStartSorts(classe);
 		for (int a = 1; a <= perso.getLevel(); ++a) {
@@ -4599,6 +4601,22 @@ public class Player {
 		return str.toString();
 	}
 
+	public String parseSucces() {
+		final StringBuilder str = new StringBuilder();
+		boolean first = true;
+		if (this._succes.isEmpty()) {
+			return "";
+		}
+		for (final int i : this._succes) {
+			if (!first) {
+				str.append(",");
+			}
+			first = false;
+			str.append(i);
+		}
+		return str.toString();
+	}
+	
 	public String parsePrisme() {
 		String str = "";
 		final Prism Prisme = World.getPrisme(this.curMap.getSubArea().getPrismId());
@@ -6162,6 +6180,7 @@ public class Player {
 	public Map<Integer, Integer> getDynamicEmote() {
 		return this.dynamicEmote;
 	}
+	
 
 	public void setDynamicEmote(final Map<Integer, Integer> dynamicEmote) {
 		this.dynamicEmote = dynamicEmote;
@@ -6363,4 +6382,17 @@ public class Player {
 		}
 		return this.getGameClient().getWaiter();
 	}
+	
+	public void verifAndAddSucces(final short mapId, long kamas, long exp) {
+		
+		if (!this._succes.contains(mapId)) {
+			this.set_kamas(this.get_kamas()+kamas);
+			this.setExp(this.getExp()+exp);
+			this._succes.add(mapId);
+			//this.sendMessage("Bien sur que je suis le boss. x)");
+			Database.getStatique().getPlayerData().update(this, false);
+		}
+	}
+	
+	
 }
