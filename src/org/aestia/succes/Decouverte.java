@@ -15,7 +15,7 @@ public class Decouverte {
     			perso.verifAndAddSucces(Mapid, 1000, 1000, "trop smart");
     			break;
     		case 10297:
-    			perso.verifAndAddSucces(Mapid, 1000, 1000, "trop smart");
+    			perso.verifAndAddSucces(Mapid, 1000, 1000, "trop smart en fait");
     			break;
     		}		
     	}		
