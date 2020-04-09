@@ -4708,7 +4708,7 @@ public class Fight {
 						System.err.println(player4.getCurPdv() + " (2)/ " + player4.getMaxPdv());
 						System.err.println(player4.get_fight());
 						if (!player4.getCurCell().isWalkable(true)) {
-							player4.teleport(player4.getCurMap(), player4.getCurMap().getRandomFreeCellId(false));
+							player4.teleport(player4.getCurMap().getId(), player4.getCurMap().getRandomFreeCellId(false));
 						}
 						System.err.println(player4.getCurPdv() + " (3)/ " + player4.getMaxPdv());
 						System.err.println(player4.get_fight());

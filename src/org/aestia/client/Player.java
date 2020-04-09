@@ -3489,18 +3489,30 @@ public class Player {
 			GameServer.addToLog("Game: INVALID CELL : " + newCellID + " ON MAP : " + newMapID);
 			return;
 		}
+		boolean fullmorph = false;
+		if (Constant.isInMorphDonjon(this.curMap.getId()) && !Constant.isInMorphDonjon(newMapID)) {
+			fullmorph = true;
+		}
 		if (newMapID == this.curMap.getId()) {
 			SocketManager.GAME_SEND_ERASE_ON_MAP_TO_MAP(this.curMap, this.getId());
 			this.curCell.removeCharacter(this.getId());
 			this.curCell = this.curMap.getCase(newCellID);
 			this.curMap.addPlayer(this);
 			SocketManager.GAME_SEND_ADD_PLAYER_TO_MAP(this.curMap, this);
+            if (fullmorph) {
+				this.unsetFullMorph();
+			}
 			return;
 		}
-		boolean fullmorph = false;
-		if (Constant.isInMorphDonjon(this.curMap.getId()) && !Constant.isInMorphDonjon(newMapID)) {
-			fullmorph = true;
+        if (!this.isInPrison() && !this.cantTP() && this.getCurMap().getSubArea() != null && map.getSubArea() != null
+				&& this.getCurMap().getSubArea().getId() == 165 && map.getSubArea().getId() == 165) {
+			if (!this.hasItemTemplate(997, 1)) {
+				SocketManager.GAME_SEND_Im_PACKET(this, "14");
+				return;
+			}
+			this.removeByTemplateID(997, 1);
 		}
+		
 		SocketManager.GAME_SEND_GA2_PACKET(client, this.getId());
 		SocketManager.GAME_SEND_ERASE_ON_MAP_TO_MAP(this.curMap, this.getId());
 		if (this.getMount() != null && this.getMount().getFatigue() >= 220) {
@@ -3566,82 +3578,6 @@ public class Player {
 			}
 		}
 		org.aestia.succes.Decouverte.succesDecouverte(this);
-	}
-
-	public void teleport(final org.aestia.map.Map map, final int cell) {
-		GameClient PW = null;
-		if (this._compte.getGameClient() != null) {
-			PW = this._compte.getGameClient();
-		}
-		if (map == null) {
-			GameServer.addToLog("Game: INVALID MAP in teleport fonction !");
-			return;
-		}
-		if (map.getCase(cell) == null) {
-			GameServer.addToLog("Game: INVALID CELL : " + cell + " ON MAP : " + map.getId());
-			return;
-		}
-		if (!this.isInPrison() && !this.cantTP() && this.getCurMap().getSubArea() != null && map.getSubArea() != null
-				&& this.getCurMap().getSubArea().getId() == 165 && map.getSubArea().getId() == 165) {
-			if (!this.hasItemTemplate(997, 1)) {
-				SocketManager.GAME_SEND_Im_PACKET(this, "14");
-				return;
-			}
-			this.removeByTemplateID(997, 1);
-		}
-		boolean fullmorph = false;
-		if (Constant.isInMorphDonjon(this.curMap.getId()) && !Constant.isInMorphDonjon(map.getId())) {
-			fullmorph = true;
-		}
-		if (map.getId() == this.curMap.getId()) {
-			SocketManager.GAME_SEND_ERASE_ON_MAP_TO_MAP(this.curMap, this.getId());
-			this.curCell.removeCharacter(this.getId());
-			this.curCell = this.curMap.getCase(cell);
-			this.curMap.addPlayer(this);
-			SocketManager.GAME_SEND_ADD_PLAYER_TO_MAP(this.curMap, this);
-			if (fullmorph) {
-				this.unsetFullMorph();
-			}
-			return;
-		}
-		if (PW != null) {
-			SocketManager.GAME_SEND_GA2_PACKET(PW, this.getId());
-			SocketManager.GAME_SEND_ERASE_ON_MAP_TO_MAP(this.curMap, this.getId());
-		}
-		if (this.getMount() != null && this.getMount().getFatigue() >= 220) {
-			this.getMount().setEnergie(this.getMount().getEnergie() - 1);
-		}
-		this.curCell.removeCharacter(this.getId());
-		this.curMap = map;
-		this.curCell = this.curMap.getCase(cell);
-		if (this.curMap.getMountPark() != null && this.curMap.getMountPark().getOwner() > 0
-				&& this.curMap.getMountPark().getGuild().getId() != -1
-				&& World.getGuild(this.curMap.getMountPark().getGuild().getId()) == null) {
-			GameServer.addToLog("[MountPark] Suppression d'un MountPark a Guild invalide. GuildID : "
-					+ this.curMap.getMountPark().getGuild().getId());
-		}
-		if (Collector.getCollectorByMapId(this.curMap.getId()) != null
-				&& World.getGuild(Collector.getCollectorByMapId(this.curMap.getId()).getGuildId()) == null) {
-			GameServer.addToLog("[Collector] Suppression d'un Collector a Guild invalide. GuildID : "
-					+ Collector.getCollectorByMapId(this.curMap.getId()).getGuildId());
-			Collector.removeCollector(Collector.getCollectorByMapId(this.curMap.getId()).getGuildId());
-		}
-		if (PW != null) {
-			SocketManager.GAME_SEND_MAPDATA(PW, map.getId(), this.curMap.getDate(), this.curMap.getKey());
-			this.curMap.addPlayer(this);
-			if (fullmorph) {
-				this.unsetFullMorph();
-			}
-		}
-		if (!this._Follower.isEmpty()) {
-			for (final Player t : this._Follower.values()) {
-				if (t.isOnline()) {
-					SocketManager.GAME_SEND_FLAG_PACKET(t, this);
-				} else {
-					this._Follower.remove(t.getId());
-				}
-			}
-		}
 	}
 
 	public void disconnectInFight() {

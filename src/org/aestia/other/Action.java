@@ -3909,7 +3909,7 @@ public class Action {
 			break;
 		}
 		case 999: {
-			perso.teleport(this.map, Integer.parseInt(this.args));
+			perso.teleport(this.map.getId(), Integer.parseInt(this.args));
 			break;
 		}
 		}
