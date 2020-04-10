@@ -274,7 +274,14 @@ public class CommandPlayer {
 					return true;
 				}
 				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Les commandes disponnible sont :\n<b>.infos</b> - Permet d'obtenir des informations sur le serveur.\n<b>.deblo</b> - Permet de vous d\u00e9bloquer en vous t\u00e9l\u00e9portant au zaap d'Astrub.\n<b>.staff</b> - Permet de voir les membres du staff connect\u00e9s.\n<b>.all</b> - Permet d'envoyer un message \u00e0 tous les joueurs.\n<b>.noall</b> - Permet de ne plus recevoir les messages du canal .all.");
+						"Les commandes disponnible sont :\n"
+						+ "<b>.infos</b> - Permet d'obtenir des informations sur le serveur.\n"
+						+ "<b>.deblo</b> - Permet de vous débloquer en vous téléportant au zaap d'Astrub.\n"
+						+ "<b>.staff</b> - Permet de voir les membres du staff connectés.\n"
+						+ "<b>.all</b> - Permet d'envoyer un message à tous les joueurs.\n"
+						+ "<b>.noall</b> - Permet de ne plus recevoir les messages du canal .all.\n"
+						+ "<b>.maitre</b> - Permet de regrouper les mules sur une même map.\n"
+						+ "<b>.tp</b> - Permet de téléporter les mules sur vous.");
 				return true;
 			}
 		}

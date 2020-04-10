@@ -6329,7 +6329,12 @@ public class Player {
 			this.sendMessage(message);
 			Database.getStatique().getPlayerData().update(this, false);
 		}
+	}	
+	public boolean verifZoneAnddAddSucces(final short mapId) {
+		if (!this._succes.contains(mapId)) {
+		
+		return true;
 	}
-	
-	
+		return true;
+	}
 }
