@@ -25,7 +25,7 @@ public class Decouverte {
     		short zone2 = 10297;
     	if (perso.verifZoneAnddAddSucces(zone1) && perso.verifZoneAnddAddSucces(zone2))  {
     		
-    		perso.verifAndAddSucces(IdSucces, 1000, 1000, "<i>Succès dévérouillé</i>: Vous avez découvert Incarnam en entier.");
+    		perso.verifAndAddSucces(IdSucces, 1000, 1000, "<i>Succès dévérouillé</i>: Vous avez découvert Incarnam en entier. BRAVO");
     		}
     		
     	}

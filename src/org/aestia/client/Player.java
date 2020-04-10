@@ -6331,7 +6331,7 @@ public class Player {
 		}
 	}	
 	public boolean verifZoneAnddAddSucces(final short mapId) {
-		if (!this._succes.contains(mapId)) {
+		if (this._succes.contains(mapId)) {
 		
 		return true;
 	}
